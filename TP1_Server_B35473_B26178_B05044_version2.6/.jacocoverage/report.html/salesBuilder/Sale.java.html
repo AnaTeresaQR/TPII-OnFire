@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Sale.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;TP1__B35473_B26178_B05044&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">salesBuilder</a> &gt; <span class="el_source">Sale.java</span></div><h1>Sale.java</h1><pre class="source lang-java linenums">package salesBuilder;
+
+/**
+ * The sale object with its data, get and set
+ *
+ * @author Robert Sánchez, Edgardo Quirós, Ana Teresa Quesada.
+ */
+public class Sale {
+
+    private String brand;
+    private String model;
+    private int year;
+    private String carId;
+    private String color;
+    private String description;
+    private int days;
+    private int minOffer;
+
+<span class="nc" id="L19">    public Sale() {</span>
+<span class="nc" id="L20">    }</span>
+
+<span class="nc" id="L22">    public Sale(String brand, String model, int year, String carId, String color, String description, int days, int minOffer) {</span>
+<span class="nc" id="L23">        this.brand = brand;</span>
+<span class="nc" id="L24">        this.model = model;</span>
+<span class="nc" id="L25">        this.year = year;</span>
+<span class="nc" id="L26">        this.carId = carId;</span>
+<span class="nc" id="L27">        this.color = color;</span>
+<span class="nc" id="L28">        this.description = description;</span>
+<span class="nc" id="L29">        this.days = days;</span>
+<span class="nc" id="L30">        this.minOffer = minOffer;</span>
+<span class="nc" id="L31">    }</span>
+
+    public String getBrand() {
+<span class="nc" id="L34">        return brand;</span>
+    }
+
+    public void setBrand(String brand) {
+<span class="nc" id="L38">        this.brand = brand;</span>
+<span class="nc" id="L39">    }</span>
+
+    public String getModel() {
+<span class="nc" id="L42">        return model;</span>
+    }
+
+    public void setModel(String model) {
+<span class="nc" id="L46">        this.model = model;</span>
+<span class="nc" id="L47">    }</span>
+
+    public int getYear() {
+<span class="nc" id="L50">        return year;</span>
+    }
+
+    public void setYear(int year) {
+<span class="nc" id="L54">        this.year = year;</span>
+<span class="nc" id="L55">    }</span>
+
+    public String getCarId() {
+<span class="nc" id="L58">        return carId;</span>
+    }
+
+    public void setCarId(String carId) {
+<span class="nc" id="L62">        this.carId = carId;</span>
+<span class="nc" id="L63">    }</span>
+
+    public String getColor() {
+<span class="nc" id="L66">        return color;</span>
+    }
+
+    public void setColor(String color) {
+<span class="nc" id="L70">        this.color = color;</span>
+<span class="nc" id="L71">    }</span>
+
+    public String getDescription() {
+<span class="nc" id="L74">        return description;</span>
+    }
+
+    public void setDescription(String description) {
+<span class="nc" id="L78">        this.description = description;</span>
+<span class="nc" id="L79">    }</span>
+
+    public int getDays() {
+<span class="nc" id="L82">        return days;</span>
+    }
+
+    public void setDays(int days) {
+<span class="nc" id="L86">        this.days = days;</span>
+<span class="nc" id="L87">    }</span>
+
+    public int getMinOffer() {
+<span class="nc" id="L90">        return minOffer;</span>
+    }
+
+    public void setMinOffer(int minOffer) {
+<span class="nc" id="L94">        this.minOffer = minOffer;</span>
+<span class="nc" id="L95">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L99">        return &quot;\nSale{&quot; + &quot;brand: &quot; + brand + &quot;, model: &quot; + model + &quot;, year: &quot; + year + &quot;, carId: &quot; + carId + &quot;, color: &quot; + color + &quot;, description: &quot; + description + &quot;, days: &quot; + days + &quot;, minOffer: &quot; + minOffer + '}';</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

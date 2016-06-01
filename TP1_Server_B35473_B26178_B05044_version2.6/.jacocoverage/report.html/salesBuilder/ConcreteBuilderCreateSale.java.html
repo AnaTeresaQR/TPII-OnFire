@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ConcreteBuilderCreateSale.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;TP1__B35473_B26178_B05044&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">salesBuilder</a> &gt; <span class="el_source">ConcreteBuilderCreateSale.java</span></div><h1>ConcreteBuilderCreateSale.java</h1><pre class="source lang-java linenums">package salesBuilder;
+
+import enums.EnumSale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import usersBuilder.CustomException;
+
+/**
+ * Class that implements AbstractBuilderCreateSale and defines methods to create
+ * a sale
+ *
+ * @author Robert Sánchez, Edgardo Quirós, Ana Teresa Quesada.
+ */
+public class ConcreteBuilderCreateSale implements AbstractBuilderCreateSale {
+
+    private Sale sale;
+    private boolean check;
+
+    /**
+     * Class constructor
+     */
+<span class="nc" id="L22">    public ConcreteBuilderCreateSale() {</span>
+<span class="nc" id="L23">        sale = new Sale();</span>
+<span class="nc" id="L24">    }</span>
+
+    /**
+     * Returns a sale if all parts have been validated with regular expressions
+     *
+     * @return @throws CustomException if any parts could not be created
+     * correctly
+     */
+    @Override
+    public Sale getSale() throws CustomException {
+<span class="nc" id="L34">        return sale;</span>
+    }
+
+    /**
+     * Builds brand if it is not empty or null
+     *
+     * @param brand, the brand of the car sale
+     * @throws CustomException, if can not set the brand
+     */
+    @Override
+    public void buildBrand(String brand) throws CustomException {
+<span class="nc bnc" id="L45" title="All 2 branches missed.">        if (brand != null</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">                &amp;&amp; !brand.equals(&quot;&quot;)</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">                &amp;&amp; checkBrand(brand)) {</span>
+<span class="nc" id="L48">            sale.setBrand(brand);</span>
+        } else {
+<span class="nc" id="L50">            throw new CustomException(&quot;La extensión de la marca excede el tamaño permitido,&quot;</span>
+                    + &quot; debe ser menor a 15 caracteres, y no debe contener caracteres especiales.&quot;);
+        }
+
+<span class="nc" id="L54">    }</span>
+
+    /**
+     * Builds model if it is not empty or null
+     *
+     * @param model, the model of the car sale
+     * @throws CustomException, if can not set the name
+     */
+    @Override
+    public void buildModel(String model) throws CustomException {
+<span class="nc bnc" id="L64" title="All 2 branches missed.">        if (model != null</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">                &amp;&amp; !model.equals(&quot;&quot;)</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">                &amp;&amp; checkModel(model)) {</span>
+<span class="nc" id="L67">            sale.setModel(model);</span>
+        } else {
+<span class="nc" id="L69">            throw new CustomException(&quot;La extensión del modelo excede el tamaño permitido,&quot;</span>
+                    + &quot; debe ser menor a 15 caracteres, y no debe contener caracteres especiales.&quot;);
+        }
+<span class="nc" id="L72">    }</span>
+
+    /**
+     * Builds year if it is not 0 or if it is between 1900 and 2016
+     *
+     * @param year, the year of the car sale
+     * @throws CustomException if can not set the year
+     */
+    @Override
+    public void buildYear(int year) throws CustomException {
+<span class="nc bnc" id="L82" title="All 2 branches missed.">        if (year != 0</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">                &amp;&amp; year &gt; EnumSale.MIN_YEAR.getNums()</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">                &amp;&amp; year &lt; EnumSale.MAX_YEAR.getNums()) {</span>
+<span class="nc" id="L85">            sale.setYear(year);</span>
+        } else {
+<span class="nc" id="L87">            throw new CustomException(&quot;No es posible guardar el año&quot;);</span>
+        }
+<span class="nc" id="L89">    }</span>
+
+    /**
+     * Builds carId if it is not empty or null
+     *
+     * @param carId, the car id of the sale
+     * @throws CustomException if can not set carId
+     */
+    @Override
+    public void buildCarId(String carId) throws CustomException {
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        if (carId != null</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">                &amp;&amp; !carId.equals(&quot;&quot;)</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">                &amp;&amp; checkCarId(carId)) {</span>
+<span class="nc" id="L102">            sale.setCarId(carId);</span>
+        } else {
+<span class="nc" id="L104">            throw new CustomException(&quot;La matricula del carro no coincide con el tipo de matricula permitida en Costa Rica&quot;);</span>
+        }
+<span class="nc" id="L106">    }</span>
+
+    /**
+     * Check Color if it is not null or empty
+     *
+     * @param color, receives the car sale color
+     * @throws CustomException if can not set the color of the car sale
+     */
+    @Override
+    public void buildColor(String color) throws CustomException {
+<span class="nc bnc" id="L116" title="All 2 branches missed.">        if (color != null</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">                &amp;&amp; !color.equals(&quot;&quot;)</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">                &amp;&amp; checkColor(color)) {</span>
+<span class="nc" id="L119">            sale.setCarId(color);</span>
+        } else {
+<span class="nc" id="L121">            throw new CustomException(&quot;El color del auto no debe contener caracteres especiales ni números,&quot;</span>
+                    + &quot; debe ser menor a 15 caracteres.&quot;);
+        }
+<span class="nc" id="L124">    }</span>
+
+    /**
+     * Builds description if it is not null
+     *
+     * @param description , the description of the sale
+     * @throws CustomException if can not set the description
+     */
+    @Override
+    public void buildDescription(String description) throws CustomException {
+<span class="nc bnc" id="L134" title="All 4 branches missed.">        if (description != null &amp;&amp; checkDescription(description)) {</span>
+<span class="nc" id="L135">            sale.setDescription(description);</span>
+        } else {
+<span class="nc" id="L137">            throw new CustomException(&quot;La extensión de la description excede el tamaño permitido, debe ser menor a 200 caracteres.&quot;);</span>
+        }
+<span class="nc" id="L139">    }</span>
+
+    /**
+     * Builds description if it is not 0 or if it is not more than 7
+     *
+     * @param days , the days of the sale
+     * @throws CustomException if can not set days
+     */
+    @Override
+    public void buildDays(int days) throws CustomException {
+<span class="nc bnc" id="L149" title="All 4 branches missed.">        if (days &gt; 0 &amp;&amp; days &lt;= EnumSale.MAX_SALE_DAYS.getNums()) {</span>
+<span class="nc" id="L150">            sale.setDays(days);</span>
+        } else {
+<span class="nc" id="L152">            throw new CustomException(&quot;No es posible guardar la cantidad de dias restantes&quot;);</span>
+        }
+
+<span class="nc" id="L155">    }</span>
+
+    /**
+     * Builds minOffer if it is bigger than 100000
+     *
+     * @param minOffer, the minOffer of the sale
+     * @throws CustomException if can not set minOffer
+     */
+    @Override
+    public void buildMinOffer(int minOffer) throws CustomException {
+<span class="nc bnc" id="L165" title="All 2 branches missed.">        if (minOffer &gt;= EnumSale.MIN_SALE_OFFER.getNums()) {</span>
+<span class="nc" id="L166">            sale.setMinOffer(minOffer);</span>
+        } else {
+<span class="nc" id="L168">            throw new CustomException(&quot;No es posible guardar la cantidad minima ofertada&quot;);</span>
+        }
+
+<span class="nc" id="L171">    }</span>
+
+    /**
+     * Check the brand, validation with regular expressions
+     *
+     * @return true if matches, false if not
+     */
+    private boolean checkBrand(String brand) {
+
+<span class="nc" id="L180">        Pattern pat = Pattern.compile(&quot;[a-zA-Z0-9]{0,15}&quot;);</span>
+<span class="nc" id="L181">        Matcher mat = pat.matcher(brand);</span>
+<span class="nc" id="L182">        check = mat.matches();</span>
+<span class="nc" id="L183">        return check;</span>
+    }
+
+    /**
+     * Check the model, validation with regular expressions
+     *
+     * @return true if matches, false if not
+     */
+    private boolean checkModel(String model) {
+
+<span class="nc" id="L193">        Pattern pat = Pattern.compile(&quot;[a-zA-Z0-9]{0,15}&quot;);</span>
+<span class="nc" id="L194">        Matcher mat = pat.matcher(model);</span>
+<span class="nc" id="L195">        check = mat.matches();</span>
+<span class="nc" id="L196">        return check;</span>
+    }
+
+    /**
+     * Check the carIdOldType, validation with regular expressions
+     *
+     * @return true if matches, false if not
+     */
+    private boolean checkCarIdOldType(String carOldId) {
+
+<span class="nc" id="L206">        Pattern pat = Pattern.compile(&quot;[0-9]{6}&quot;);</span>
+<span class="nc" id="L207">        Matcher mat = pat.matcher(carOldId);</span>
+<span class="nc" id="L208">        check = mat.matches();</span>
+<span class="nc" id="L209">        return check;</span>
+    }
+
+    /**
+     * Check the carIdNewType, validation with regular expressions
+     *
+     * @return true if matches, false if not
+     */
+    private boolean checkCarIdNewType(String carNewId) {
+
+<span class="nc" id="L219">        Pattern pat = Pattern.compile(&quot;[A-Z]{3}+[0-9]{3}&quot;);</span>
+<span class="nc" id="L220">        Matcher mat = pat.matcher(carNewId);</span>
+<span class="nc" id="L221">        check = mat.matches();</span>
+<span class="nc" id="L222">        return check;</span>
+    }
+
+    /**
+     * Check the car color, validation with regular expressions
+     *
+     * @return true if matches, false if not
+     */
+    private boolean checkColor(String color) {
+
+<span class="nc" id="L232">        Pattern pat = Pattern.compile(&quot;[a-zA-Z]{0,15}&quot;);</span>
+<span class="nc" id="L233">        Matcher mat = pat.matcher(color);</span>
+<span class="nc" id="L234">        check = mat.matches();</span>
+<span class="nc" id="L235">        return check;</span>
+    }
+
+    /**
+     * Check the description, validation with regular expressions
+     *
+     * @return true if matches, false if not
+     */
+    private boolean checkDescription(String description) {
+
+<span class="nc" id="L245">        Pattern pat = Pattern.compile(&quot;[a-zA-Z]{0,200}&quot;);</span>
+<span class="nc" id="L246">        Matcher mat = pat.matcher(description);</span>
+<span class="nc" id="L247">        check = mat.matches();</span>
+<span class="nc" id="L248">        return check;</span>
+    }
+
+    /**
+     * Check the car id, validation with regular expressions
+     *
+     * @return true if matches, false if not
+     */
+    private boolean checkCarId(String carId) {
+<span class="nc bnc" id="L257" title="All 4 branches missed.">        if (checkCarIdOldType(carId) || checkCarIdNewType(carId)) {</span>
+<span class="nc" id="L258">            return true;</span>
+        } else {
+<span class="nc" id="L260">            return true;</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ConcreteBuilderCreateUser.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;TP1__B35473_B26178_B05044&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">usersBuilder</a> &gt; <span class="el_source">ConcreteBuilderCreateUser.java</span></div><h1>ConcreteBuilderCreateUser.java</h1><pre class="source lang-java linenums">package usersBuilder;
+
+import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * Class that implements AbstractBuilderCreateUser and defines methods to create
+ * a user
+ *
+ * @author Robert Sánchez, Edgardo Quirós, Ana Teresa Quesada.
+ */
+public class ConcreteBuilderCreateUser implements AbstractBuilderCreateUser {
+
+    private User user;
+    private boolean check;
+
+    /**
+     * Class constructor
+     */
+<span class="fc" id="L21">    public ConcreteBuilderCreateUser() {</span>
+<span class="fc" id="L22">        user = new User();</span>
+<span class="fc" id="L23">    }</span>
+
+    /**
+     * Returns a user if all parts have been validated with regular expressions
+     *
+     * @return @throws CustomException if any parts could not be created
+     * correctly
+     */
+    @Override
+    public User getUser() throws CustomException {
+<span class="fc" id="L33">        return user;</span>
+
+    }
+
+    /**
+     * Builds id if it is not empty or null
+     *
+     * @param id, the schedule of the user
+     * @throws CustomException, if can not set the id
+     */
+    @Override
+    public void buildId(String id) throws CustomException {
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (id != null</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">                &amp;&amp; !id.equals(&quot;&quot;)</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">                &amp;&amp; checkId(id)) {</span>
+<span class="fc" id="L48">            user.setId(id);</span>
+        } else {
+<span class="fc" id="L50">            throw new CustomException(&quot;Formato incorrecto de cédula, utilice el formato de cédula costarricense&quot;);</span>
+
+        }
+
+<span class="fc" id="L54">    }</span>
+
+    /**
+     * Builds name if it is not empty or null
+     *
+     * @param name, the name of the user
+     * @throws CustomException, if can not set the name
+     */
+    @Override
+    public void buildName(String name) throws CustomException {
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        if (name != null</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">                &amp;&amp; !name.equals(&quot;&quot;)</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">                &amp;&amp; checkName(name)) {</span>
+<span class="fc" id="L67">            user.setName(name);</span>
+
+        } else {
+<span class="fc" id="L70">            throw new CustomException(&quot;La extensión del nombre excede el tamaño permitido, debe ser menor a 100 caracteres.&quot;);</span>
+        }
+<span class="fc" id="L72">    }</span>
+
+    /**
+     * Builds email if it is not empty or null
+     *
+     * @param email, the email of the user
+     * @throws CustomException if can not set themail
+     */
+    @Override
+    public void buildEmail(String email) throws CustomException {
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        if (email != null</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">                &amp;&amp; !email.equals(&quot;&quot;)</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">                &amp;&amp; checkEmail(email)) {</span>
+<span class="fc" id="L85">            user.setEmail(email);</span>
+        } else {
+<span class="fc" id="L87">            throw new CustomException(&quot;Formato incorrecto de email, Ingrese de nuevo. Ejemplo: ejemplo1@ejemplo.com&quot;);</span>
+        }
+<span class="fc" id="L89">    }</span>
+
+    /**
+     * Builds password if it is not empty or null
+     *
+     * @param password, the email password of the user
+     * @throws CustomException if can not set password
+     */
+    @Override
+    public void buildPassword(String password) throws CustomException {
+<span class="fc bfc" id="L99" title="All 2 branches covered.">        if (password != null</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">                &amp;&amp; !password.equals(&quot;&quot;)</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">                &amp;&amp; checkPassword(password)) {</span>
+<span class="fc" id="L102">            user.setPassword(password);</span>
+        } else {
+<span class="fc" id="L104">            throw new CustomException(&quot;Formato incorrecto de contraseña. Ingrese de nuevo, no debe contener caracteres especiales y debe tener una extensión mínima de 5 caracteres.&quot;);</span>
+        }
+<span class="fc" id="L106">    }</span>
+
+    /**
+     * Check birthday if it is not null or if the user is of age
+     *
+     * @param birthdate, receives the user birthdate
+     * @throws CustomException if can not set the birthdate
+     */
+    @Override
+    public void buildBirthdate(Calendar birthdate) throws CustomException {
+<span class="fc bfc" id="L116" title="All 4 branches covered.">        if (birthdate != null &amp;&amp; validateAdult(birthdate)) {</span>
+<span class="fc" id="L117">            user.setBirthdate(birthdate);</span>
+        } else {
+<span class="fc" id="L119">            throw new CustomException(&quot;No es posible guardar la fecha de nacimiento&quot;);</span>
+        }
+<span class="fc" id="L121">    }</span>
+
+    /**
+     * Builds phoneNumber if it is not empty or null
+     *
+     * @param phoneNumber, the phoneNumber of the user
+     * @throws CustomException if can not set phoneNumber
+     */
+    @Override
+    public void buildPhoneNumber(String phoneNumber) throws CustomException {
+<span class="fc bfc" id="L131" title="All 2 branches covered.">        if (phoneNumber != null</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">                &amp;&amp; !phoneNumber.equals(&quot;&quot;)</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">                &amp;&amp; checkPhoneNumber(phoneNumber)) {</span>
+<span class="fc" id="L134">            user.setPhoneNumber(phoneNumber);</span>
+        } else {
+<span class="fc" id="L136">            throw new CustomException(&quot;Formato incorrecto de teléfono. Ingrese de nuevo, utilizar formato constarricense&quot;);</span>
+        }
+<span class="fc" id="L138">    }</span>
+
+    /**
+     * Check the name, validation with regular expressions
+     *
+     * @return true if matches, false if not
+     */
+    private boolean checkName(String name) {
+
+<span class="fc" id="L147">        Pattern pat = Pattern.compile(&quot;[a-zA-Z]{0,100}&quot;);</span>
+<span class="fc" id="L148">        Matcher mat = pat.matcher(name);</span>
+<span class="fc" id="L149">        check = mat.matches();</span>
+<span class="fc" id="L150">        return check;</span>
+    }
+
+    /**
+     * Check the schedule or id, validation with regular expressions
+     *
+     * @return true if matches, false if not
+     */
+    private boolean checkId(String id) {
+<span class="fc" id="L159">        Pattern pat = Pattern.compile(&quot;[0-9]{9}&quot;);</span>
+<span class="fc" id="L160">        Matcher mat = pat.matcher(id);</span>
+<span class="fc" id="L161">        check = mat.matches();</span>
+<span class="fc" id="L162">        return check;</span>
+    }
+
+    /**
+     * Check the email, validation with regular expressions
+     *
+     * @return true if matches, false if not
+     */
+    private boolean checkEmail(String email) {
+
+        //  Pattern pat = Pattern.compile(&quot;^[\\w-]+(\\.[\\w-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$&quot;);
+<span class="fc" id="L173">        Pattern pat = Pattern.compile(&quot;\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*&quot;);</span>
+<span class="fc" id="L174">        Matcher mat = pat.matcher(email);</span>
+<span class="fc" id="L175">        check = mat.find();</span>
+<span class="fc" id="L176">        return check;</span>
+    }
+
+    /**
+     * Check the password, validation with regular expressions
+     *
+     * @return true if matches, false if not
+     */
+    private boolean checkPassword(String password) {
+<span class="fc" id="L185">        Pattern pat = Pattern.compile(&quot;[a-zA-Z0-9]{5,}&quot;);</span>
+<span class="fc" id="L186">        Matcher mat = pat.matcher(password);</span>
+<span class="fc" id="L187">        check = mat.matches();</span>
+<span class="fc" id="L188">        return check;</span>
+    }
+
+    /**
+     * Check the phoneNumber, validation with regular expressions
+     *
+     * @return true if matches, false if not
+     */
+    private boolean checkPhoneNumber(String phoneNumber) {
+<span class="fc" id="L197">        Pattern pat = Pattern.compile(&quot;[0-9]{8}&quot;);</span>
+<span class="fc" id="L198">        Matcher mat = pat.matcher(phoneNumber);</span>
+<span class="fc" id="L199">        check = mat.matches();</span>
+<span class="fc" id="L200">        return check;</span>
+    }
+
+    /**
+     * Validate if the user is an adult
+     *
+     * @param birthdate, receives the user birthdate
+     * @return true if is an adult, false if not
+     */
+    private boolean validateAdult(Calendar birthdate) {
+<span class="fc" id="L210">        Calendar actual = Calendar.getInstance();</span>
+
+<span class="fc" id="L212">        int year = actual.get(Calendar.YEAR) - birthdate.get(Calendar.YEAR);</span>
+<span class="fc" id="L213">        int month = actual.get(Calendar.MONTH) - birthdate.get(Calendar.MONTH);</span>
+<span class="fc" id="L214">        int day = actual.get(Calendar.DAY_OF_MONTH) - birthdate.get(Calendar.DAY_OF_MONTH);</span>
+<span class="fc bfc" id="L215" title="All 2 branches covered.">        if (day &lt; 0) {</span>
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">            if (month &lt; 0) {</span>
+<span class="fc" id="L217">                year--;</span>
+            }
+        }
+<span class="fc bfc" id="L220" title="All 2 branches covered.">        return year &gt;= 18;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

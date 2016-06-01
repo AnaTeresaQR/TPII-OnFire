@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DirectorSales.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;TP1__B35473_B26178_B05044&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">salesBuilder</a> &gt; <span class="el_source">DirectorSales.java</span></div><h1>DirectorSales.java</h1><pre class="source lang-java linenums">package salesBuilder;
+
+import usersBuilder.CustomException;
+
+/**
+ * Class is responsible for creating the sale object completely, with all its
+ * parts verified
+ *
+ * @author Robert Sánchez, Edgardo Quirós, Ana Teresa Quesada.
+ */
+<span class="nc" id="L11">public class DirectorSales {</span>
+
+    /**
+     * Method that is responsible for validating every part of creation, before
+     * returning the object
+     *
+     * @param builder, the instance of the concrete parts creator
+     * @param brand, the sale brand
+     * @param model, the sale model
+     * @param year, the sale year
+     * @param carId, the sale carId
+     * @param color, the sale color
+     * @param description, the sale description
+     * @param days, the sale days
+     * @param minOffer, the sale minnOffer
+     * @return the sale completely validate
+     * @throws CustomException if could not create one of the parties
+     */
+    public Sale createSale(AbstractBuilderCreateSale builder, String brand, String model, int year, String carId, String color, String description, int days, int minOffer) throws CustomException {
+<span class="nc bnc" id="L30" title="All 2 branches missed.">        if (builder == null) {</span>
+<span class="nc" id="L31">            builder = new ConcreteBuilderCreateSale();</span>
+        }
+
+<span class="nc" id="L34">        builder.buildBrand(brand);</span>
+<span class="nc" id="L35">        builder.buildCarId(model);</span>
+<span class="nc" id="L36">        builder.buildYear(year);</span>
+<span class="nc" id="L37">        builder.buildCarId(carId);</span>
+<span class="nc" id="L38">        builder.buildColor(color);</span>
+<span class="nc" id="L39">        builder.buildDescription(description);</span>
+<span class="nc" id="L40">        builder.buildDays(days);</span>
+<span class="nc" id="L41">        builder.buildMinOffer(minOffer);</span>
+<span class="nc" id="L42">        return builder.getSale();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

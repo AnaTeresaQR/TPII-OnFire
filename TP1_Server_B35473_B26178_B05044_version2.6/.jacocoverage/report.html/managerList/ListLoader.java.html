@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ListLoader.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;TP1__B35473_B26178_B05044&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">managerList</a> &gt; <span class="el_source">ListLoader.java</span></div><h1>ListLoader.java</h1><pre class="source lang-java linenums">package managerList;
+
+import files.FileReader;
+import java.io.EOFException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Class is responsible for loading a list of objects stored in a binary file
+ *
+ * @author Robert Sánchez, Edgardo Quirós, Ana Teresa Quesada.
+ * @param &lt;T&gt; the object that will be load in the list
+ */
+public class ListLoader&lt;T&gt; {
+
+    private FileReader&lt;T&gt; reader;
+
+<span class="fc" id="L19">    public ListLoader(String fileName) {</span>
+<span class="fc" id="L20">        reader = new FileReader&lt;&gt;(fileName);</span>
+<span class="fc" id="L21">    }</span>
+
+    /**
+     * Add users in the list, that are in the file
+     *
+     * @return the list of loaded elements
+     */
+    public List&lt;T&gt; loadList() {
+<span class="fc" id="L29">        List&lt;T&gt; list = new ArrayList&lt;&gt;();</span>
+        try {
+<span class="fc" id="L31">            reader.open(); // open it</span>
+<span class="fc" id="L32">            list = (List&lt;T&gt;) reader.read(); // add the object in the list, that is in the file</span>
+<span class="fc" id="L33">            return list;</span>
+            // If we read to the end of file
+<span class="nc" id="L35">        } catch (EOFException e) {</span>
+<span class="nc" id="L36">            System.out.println(&quot;Error al terminar de leer el archivo&quot;);</span>
+<span class="nc" id="L37">        } catch (IOException | ClassNotFoundException ex) {</span>
+<span class="nc" id="L38">            System.out.println(&quot;Hubo un error en el archivo o no se encontrò la clase que se buscaba\n&quot; + ex.getMessage());</span>
+<span class="fc" id="L39">        } catch (NullPointerException e) {</span>
+            // when clear the file the list is empty, and need to load elements in the list, we need to create a new List
+<span class="fc" id="L41">            return new ArrayList&lt;&gt;();</span>
+        } finally {
+<span class="nc" id="L43">            try {</span>
+<span class="pc" id="L44">                reader.close();</span>
+<span class="nc" id="L45">            } catch (IOException ex) {</span>
+<span class="nc" id="L46">                reader = null;</span>
+<span class="pc" id="L47">            }</span>
+<span class="nc" id="L48">        }</span>
+<span class="nc" id="L49">        return list;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
