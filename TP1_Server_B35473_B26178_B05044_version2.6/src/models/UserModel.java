@@ -49,6 +49,7 @@ public class UserModel extends DateFormatString implements Serializable {
 
     /**
      * Method to add the user model to the users list.
+     * @return 
      */
     public boolean createModel() {
         return userListManager.register(this);

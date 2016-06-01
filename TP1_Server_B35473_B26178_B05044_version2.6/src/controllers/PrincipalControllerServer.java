@@ -35,11 +35,10 @@ public class PrincipalControllerServer {
 
     public PrincipalControllerServer(Server server) {
         this.server = server;
-        System.out.println("1");
         director = new Director();
-        System.out.println("2");
         this.saleModel = new SaleModel();
         this.modelUser = new UserModel();
+        loadFile();
         factorySales = new ConcreteFactorySale();
     }
 
@@ -70,16 +69,17 @@ public class PrincipalControllerServer {
     public boolean createUser(String id, String name, String email, String password, Calendar birthdate, String phoneNumber) throws IOException, CustomException {
         director.createUser(new ConcreteBuilderCreateUser(), modelUser, id, name, email, password, birthdate, phoneNumber);
         boolean resultCreateModel = modelUser.createModel();
-        modelUser.save();
+        if (resultCreateModel) {
+            modelUser.save();
+        }
         return resultCreateModel;
     }
 
-    public void loadFile() {
+    private void loadFile() {
         modelUser.listLoader(); // update list
     }
 
     public UserModel loginUser(String email, String password) throws IOException {
-        loadFile();
         UserModel temp = modelUser.login(email, password);
         if (temp != null) {
             modelUser = temp;
@@ -97,7 +97,6 @@ public class PrincipalControllerServer {
     public boolean createSaleBuilder(AbstractBuilderCreateSale abstractBuilderSale, String brand, String model, int year, String carId, String color, String description, int days, int minOffer) throws IOException, CustomException {
         factorySales.createSale(abstractBuilderSale, saleModel, modelUser, brand, model, year, carId, color, description, days, minOffer);
         boolean resultCreateModel = saleModel.createModel();
-        
         saleModel.save();
         return resultCreateModel;
     }

@@ -4,7 +4,7 @@ import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import objectLists.SaleList;
+import java.util.List;
 
 /**
  * Class is responsible for write in the file. receives in the constructor the
@@ -40,13 +40,13 @@ public class FileReader<T> {
     /**
      * Method is responsible for reading the file
      *
-     * @return a read user
+     * @return a read object
      * @throws java.io.IOException file error
      * @throws java.lang.ClassNotFoundException if the class is not looking
      * @throws java.io.EOFException if it is the end of file
      */
-    public SaleList read() throws IOException, EOFException, ClassNotFoundException {
-        return (SaleList) reader.readObject();
+    public List<T> read() throws IOException, EOFException, ClassNotFoundException {
+        return (List<T>) reader.readObject();
     }
 
     /**
