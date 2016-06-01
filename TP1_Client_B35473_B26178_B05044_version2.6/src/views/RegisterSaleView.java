@@ -1,7 +1,9 @@
 package views;
 
 import controllers.ManageSalesController;
+import controllers.PrincipalController;
 import java.io.IOException;
+import java.text.ParseException;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,27 +24,36 @@ public class RegisterSaleView extends javax.swing.JFrame {
 
     private ManageSalesController controller;
 
+    private PrincipalController principalController;
+
     /**
      * Creates new form RegisterUserView
      *
      * @param controller
      */
-    public RegisterSaleView(ManageSalesController controller) {
+    public RegisterSaleView(PrincipalController principalController, ManageSalesController controller) {
         this.controller = controller;
+        this.principalController = principalController;
         initComponents();
         this.setLocationRelativeTo(null);
     }
 
-    private void initVariables() {
-        this.brand = jT_brand.getText();
-        this.model = jT_Model.getText();
-        this.year = Integer.parseInt(jT_Year.getText());
-        this.carId = jT_CarId.getText();
-        this.color = jT_Color.getText();
-        this.description = jT_Description.getText();
-        this.days = Integer.parseInt(jT_Days.getText());
-        this.minOffer = Integer.parseInt(jT_MinOffer.getText());
-        this.typeSale = jC_TypeSAle.getSelectedIndex();
+    private boolean initVariables() {
+        try {
+            this.brand = jT_brand.getText();
+            this.model = jT_Model.getText();
+            this.year = Integer.parseInt(jT_Year.getText());
+            this.carId = jT_CarId.getText();
+            this.color = jT_Color.getText();
+            this.description = jT_Description.getText();
+            this.days = Integer.parseInt(jT_Days.getText());
+            this.minOffer = Integer.parseInt(jT_MinOffer.getText());
+            this.typeSale = jC_TypeSAle.getSelectedIndex();
+            return true;
+        } catch (NumberFormatException | NullPointerException ex) {
+            JOptionPane.showMessageDialog(null, "Hay datos que se encuentran vacíos o con formatos incorrectos");
+            return false;
+        }
 
     }
 
@@ -224,10 +235,20 @@ public class RegisterSaleView extends javax.swing.JFrame {
     private void jB_registerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_registerActionPerformed
 
         try {
-            this.initVariables();
-            String message = controller.createSale(brand, model, year, carId, color, description, days, minOffer, typeSale);
-            JOptionPane.showMessageDialog(null, "Resultado de Registrar\n" + message);
-            
+            boolean continueWriting = this.initVariables();
+            if (continueWriting) {
+                controller.processConfirmationAction(continueWriting);
+                boolean status = controller.createSale(brand, model, year, carId, color, description, days, minOffer, typeSale);
+                JOptionPane.showMessageDialog(null, "Resultado de Registrar\n" + controller.messageRegisterSale(status));
+                if (status) {
+                    principalController.showMenu(principalController);
+                } else {
+                    controller.returnView(principalController, this);
+                }
+            } else {
+                principalController.processConfirmationAction(continueWriting);
+                controller.returnView(principalController, this);
+            }
             this.dispose();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -236,7 +257,12 @@ public class RegisterSaleView extends javax.swing.JFrame {
     }//GEN-LAST:event_jB_registerActionPerformed
 
     private void jB_returnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_returnActionPerformed
-
+        try {
+            principalController.processConfirmationAction(false);
+            controller.returnView(principalController, this);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
     }//GEN-LAST:event_jB_returnActionPerformed
 
     /**

@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
-import socketClient.Client;
 
 /**
  *
@@ -20,13 +18,12 @@ public class ShowOwnSalesView extends javax.swing.JFrame {
     private int selection;
     private ManageSalesController manageSalesController;
 
-    public ShowOwnSalesView(PrincipalController controller, Client client) {
+    public ShowOwnSalesView(PrincipalController controller, ManageSalesController manageSalesController) {
         initComponents();
         this.controller = controller;
-        this.manageSalesController = new ManageSalesController(client);
+        this.manageSalesController = manageSalesController;
         // initSaleApproveList(sales);
         this.setLocationRelativeTo(null);
-        //  this.client = client;
     }
 
     /**
@@ -129,8 +126,11 @@ public class ShowOwnSalesView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bt_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_backActionPerformed
+        this.selection = 0;
         try {
+           
             controller.processConfirmationAction(false);
+             controller.selectAction(selection);
             controller.showMenu(controller, this);
         } catch (IOException ex) {
             System.out.println("" + ex.getMessage());
@@ -147,7 +147,7 @@ public class ShowOwnSalesView extends javax.swing.JFrame {
         try {
             controller.selectAction(selection);
 //            manageSalesController.selectActionAddSale(selection);
-            controller.showAddSale(manageSalesController);
+            controller.showAddSale(manageSalesController, this);
         } catch (IOException ex) {
             Logger.getLogger(UserMenuView.class.getName()).log(Level.SEVERE, null, ex);
         }

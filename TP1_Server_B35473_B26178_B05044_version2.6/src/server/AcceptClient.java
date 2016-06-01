@@ -107,7 +107,6 @@ public class AcceptClient extends Thread {
 
     public void processMenuSelectAction() throws IOException, CustomException, ClassNotFoundException {
         int selection = input.readInt();
-        System.out.println("seleccion del usuario: " + selection);
         switch (selection) {
             case 6:
                 processManageSales();
@@ -119,21 +118,12 @@ public class AcceptClient extends Thread {
 
     private void processManageSales() throws IOException, CustomException, ClassNotFoundException {
         int selection = input.readInt();
-        System.out.println("seleccion del usuario: " + selection);
         switch (selection) {
-            case 4:
-                processRegisterSale();
+            case 0:
+                processMenuSelectAction();
+                
                 break;
-            default:
-                throw new AssertionError();
-        }
-    }
-
-    public void processSaleSelectAction() throws IOException, ClassNotFoundException, CustomException {
-        int selection = input.readInt();
-        System.out.println("seletion 3 menu deberia ser 1" + selection);
-        switch (selection) {
-            case 1:
+            case 4:
                 processRegisterSale();
                 break;
             default:
@@ -166,7 +156,7 @@ public class AcceptClient extends Thread {
 
     public void processLoginUser() throws IOException, ClassNotFoundException, CustomException {
         // I need to know if the user want to be register or not
-        Boolean confirmation = input.readBoolean();
+        boolean confirmation = input.readBoolean();
         if (confirmation) {
             String email = input.readUTF();
             String password = input.readUTF();
@@ -184,9 +174,10 @@ public class AcceptClient extends Thread {
         }
     }
 
-    public String processRegisterSale() throws CustomException {
-        String messageConfirmation = "";
-        try {
+    public void processRegisterSale() throws CustomException, IOException, ClassNotFoundException {
+        boolean confirmation = input.readBoolean();
+
+        if (confirmation) {
             String brand = input.readUTF();
             String model = input.readUTF();
             int year = input.readInt();
@@ -196,7 +187,7 @@ public class AcceptClient extends Thread {
             int days = input.readInt();
             int minOffer = input.readInt();
             int typeSale = input.readInt();
-            System.out.println(" " + brand + model + " " + year + id + color + description + days + minOffer + typeSale);
+
             if (typeSale == 0) {
                 abstractBuilderSale = new ConcreteBuilderOpenSale();
             } else {
@@ -204,18 +195,18 @@ public class AcceptClient extends Thread {
                     abstractBuilderSale = new ConceteBuilderCloseSale();
                 }
             }
-            boolean userBuild = controller.createSaleBuilder(abstractBuilderSale, brand, model, year, id, color, description, days, minOffer);
-            if (userBuild) {
-                messageConfirmation += "La subasta se pudo registrar con éxito";
+
+            boolean saleBuildStatus = controller.createSaleBuilder(abstractBuilderSale, brand, model, year, id, color, description, days, minOffer);
+            if (saleBuildStatus) {
+                output.writeBoolean(saleBuildStatus);
+                processManageSales();
             } else {
-                messageConfirmation += "No ha sido posible registrar la subasta";
+                output.writeBoolean(saleBuildStatus);
+                processManageSales();
             }
-            output.writeUTF(messageConfirmation);
-            return messageConfirmation;
-        } catch (IOException e) {
-            e.printStackTrace();
+        } else {
+            processManageSales();
         }
-        return messageConfirmation;
     }
 
 }
