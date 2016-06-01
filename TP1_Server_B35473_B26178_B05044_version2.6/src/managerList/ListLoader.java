@@ -26,12 +26,11 @@ public class ListLoader<T> {
      *
      * @return the list of loaded elements
      */
-    public SaleList loadList() {
-       SaleList  list = null;
-        //List<T> list = new ArrayList<>();
+    public List<T> loadList() {
+        List<T> list = new ArrayList<>();
         try {
             reader.open(); // open it
-            list = (SaleList ) reader.read(); // add the object in the list, that is in the file
+            list = reader.read(); // add the object in the list, that is in the file
             return list;
             // If we read to the end of file
         } catch (EOFException e) {

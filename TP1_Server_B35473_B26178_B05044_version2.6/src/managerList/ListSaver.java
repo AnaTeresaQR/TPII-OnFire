@@ -3,7 +3,6 @@ package managerList;
 import files.FileWriter;
 import java.io.IOException;
 import java.util.List;
-import objectLists.SaleList;
 
 /**
  * Class writes the list stored in the collection in a binary file
@@ -25,12 +24,12 @@ public class ListSaver<T> {
      *
      * @param list, receives the list to write in the file
      */
-    public void saveList(SaleList list) {
+    public void saveList(List<T> list) {
         try {
             fileWriter.clear(); // first clear the file
             fileWriter.open();
 
-            fileWriter.write((SaleList) list);
+            fileWriter.write(list);
 
             fileWriter.close();
         } catch (IOException e) {

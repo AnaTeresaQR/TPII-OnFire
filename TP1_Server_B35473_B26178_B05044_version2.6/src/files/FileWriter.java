@@ -40,7 +40,7 @@ public class FileWriter<T> {
      * sales
      * @throws java.io.IOException if an error occurs when writing
      */
-    public void write(SaleList list) throws IOException {
+    public void write(List<T> list) throws IOException {
         writer.writeObject(list); // write in the file
     }
 

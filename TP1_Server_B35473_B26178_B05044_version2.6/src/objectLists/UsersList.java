@@ -124,7 +124,7 @@ public class UsersList {
      */
     public void save() {
         ListSaver<UserModel> save = new ListSaver<>(EnumFiles.USER_FILE_NAME.getValue());
-        save.saveList((SaleList) this.userslist);
+        save.saveList(this.userslist);
     }
 
 }

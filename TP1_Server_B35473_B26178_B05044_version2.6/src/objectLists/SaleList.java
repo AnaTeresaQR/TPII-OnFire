@@ -189,7 +189,7 @@ public class SaleList implements Serializable {
      */
     public void listLoader() {
         ListLoader<SaleList> loader = new ListLoader<>(EnumFiles.SALE_FILE_NAME.getValue());
-        this.saleList = (List<SaleList>) loader.loadList();
+        this.saleList = loader.loadList();
     }
 
     /**
@@ -197,7 +197,7 @@ public class SaleList implements Serializable {
      */
     public void save() {
         ListSaver<SaleList> save = new ListSaver<>(EnumFiles.SALE_FILE_NAME.getValue());
-        save.saveList((SaleList) this.saleList);
+        save.saveList(this.saleList);
     }
 
     public void setStrategy(Strategy strategy) {

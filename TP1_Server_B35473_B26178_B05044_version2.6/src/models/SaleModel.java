@@ -66,13 +66,11 @@ public class SaleModel extends DateFormatString {
     }
 
     public void save() throws CustomException {
-       this.setState("waiting");
-       saleListManager.addSale(this);
-        System.out.println("tamaño de la lista de espera"+saleListManager.getWaitingApproveSalesList().size());
+        this.setState("waiting");
+        saleListManager.addSale(this);
+        System.out.println("tamaño de la lista de espera" + saleListManager.getWaitingApproveSalesList().size());
         saleListManager.save();
     }
-    
-    
 
     public void listLoader() {
         saleListManager.listLoader();
