@@ -1,6 +1,7 @@
 package models;
 
 import factorySale.ManagerOffersOpenCloseSale;
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -12,8 +13,8 @@ import usersBuilder.CustomException;
  *
  * @author Robert Sánchez, Edgardo Quirós, Ana Teresa Quesada.
  */
-public class SaleModel extends DateFormatString {
-    
+public class SaleModel extends DateFormatString implements Serializable{
+
     private Date initialDate;
     private UserModel user;
     private String brand;
@@ -27,15 +28,17 @@ public class SaleModel extends DateFormatString {
     private boolean saleApproved;
     private String registrationDate;
     private String state;
-    
+
     private final int INITIALPAYMENTAMOUT = 5000;
-    
+
     private static final SaleList saleListManager = new SaleList();
     private static ManagerOffersOpenCloseSale manager;
-    
+
     public SaleModel() {
+
+        manager = new ManagerOffersOpenCloseSale();
     }
-    
+
     public SaleModel(UserModel user, String brand, String model, int year, String carId, String color, String description, int days, int minOffer) {
         this.user = user;
         this.brand = brand;
@@ -48,35 +51,34 @@ public class SaleModel extends DateFormatString {
         this.minOffer = minOffer;
         manager = new ManagerOffersOpenCloseSale();
     }
-    
+
     public static SaleList getSaleListManager() {
         return saleListManager;
     }
-    
+
     public boolean createModel() throws CustomException {
         this.setState("waiting");
         return saleListManager.addSale(this);
     }
-    
+
     public static SaleModel findModel(SaleModel index) throws ArrayIndexOutOfBoundsException, CustomException {
         return saleListManager.readSale(index);
     }
-    
+
     public boolean delete() throws CustomException {
         return saleListManager.removeSale(this);
     }
-    
+
     public void save() throws CustomException {
-        this.setState("waiting");
-        saleListManager.addSale(this);
-        System.out.println("tamaño de la lista de espera" + saleListManager.getWaitingApproveSalesList().size());
         saleListManager.save();
     }
-    
+
     public void listLoader() {
+        // Here we load the list
+        // Unique place to load the list
         saleListManager.listLoader();
     }
-    
+
     public void refresh() {
         saleListManager.refresh();
     }
@@ -132,106 +134,111 @@ public class SaleModel extends DateFormatString {
         this.registrationDate = dia + mes + anno + "";
         return registrationDate;
     }
-    
+
     public Date getInitialDate() {
         return initialDate;
     }
-    
+
     public void setInitialDate(Date date) {
         this.initialDate = date;
     }
-    
+
     public boolean isSaleApproved() {
         return saleApproved;
     }
-    
+
     public void setSaleApproved(boolean isSaleApproved) {
         this.saleApproved = isSaleApproved;
     }
-    
+
     public UserModel getUser() {
         return user;
     }
-    
+
     public void setUser(UserModel user) {
         this.user = user;
     }
-    
+
     public String getBrand() {
         return brand;
     }
-    
+
     public void setBrand(String brand) {
         this.brand = brand;
     }
-    
+
     public String getModel() {
         return model;
     }
-    
+
     public void setModel(String model) {
         this.model = model;
     }
-    
+
     public int getYear() {
         return year;
     }
-    
+
     public void setYear(int year) {
         this.year = year;
     }
-    
+
     public String getCarId() {
         return carId;
     }
-    
+
     public void setCarId(String carId) {
         this.carId = carId;
     }
-    
+
     public String getColor() {
         return color;
     }
-    
+
     public void setColor(String color) {
         this.color = color;
     }
-    
+
     public String getDescription() {
         return description;
     }
-    
+
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
     public int getDays() {
         return days;
     }
-    
+
     public void setDays(int days) {
         this.days = days;
     }
-    
+
     public int getMinOffer() {
         return minOffer;
     }
-    
+
     public void setMinOffer(int minOffer) {
         this.minOffer = minOffer;
     }
-    
+
     public String getState() {
         return state;
     }
-    
+
     public void setState(String state) {
         this.state = state;
     }
-    
+
+    public int totalSize() {
+        return saleListManager.totalSize();
+    }
+
     @Override
     public String toString() {
+        System.out.println("" + "Marca: " + brand + "\nModelo: " + model + "\nAño: " + year + "\nNúmero de placa: " + carId + "\nColor: " + color + "\nDescripción: " + description + "\nDuración de la subasta: " + days + " días" + "\nOferta mínima: " + minOffer + " colones");
         return "Marca: " + brand + "\nModelo: " + model + "\nAño: " + year + "\nNúmero de placa: " + carId + "\nColor: " + color + "\nDescripción: " + description + "\nDuración de la subasta: " + days + " días" + "\nOferta mínima: " + minOffer + " colones";
     }
-    
+
 }

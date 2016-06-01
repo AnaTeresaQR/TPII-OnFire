@@ -4,6 +4,7 @@ import factorySale.ConcreteFactorySale;
 import factorySale.FactorySaleInterface;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
 import managementAdministrator.ManagementAdministrator;
 import models.SaleModel;
 import models.UserModel;
@@ -40,6 +41,7 @@ public class PrincipalControllerServer {
         this.modelUser = new UserModel();
         loadFile();
         loadFileSale();
+//        System.out.println("tamaño lista: " + SaleModel.getSaleListManager().getWaitingApproveSalesList().size());
         factorySales = new ConcreteFactorySale();
     }
 
@@ -78,10 +80,16 @@ public class PrincipalControllerServer {
 
     private void loadFile() {
         modelUser.listLoader(); // update list
+
+        System.out.println("users: " + modelUser.size());
+
     }
 
     private void loadFileSale() {
         saleModel.listLoader();
+        
+        
+        //System.out.println("sales: " + SaleModel.getSaleListManager().getWaitingApproveSalesList().get(0).getCarId());
     }
 
     public UserModel loginUser(String email, String password) throws IOException {
@@ -100,11 +108,17 @@ public class PrincipalControllerServer {
     }
 
     public boolean createSaleBuilder(AbstractBuilderCreateSale abstractBuilderSale, String brand, String model, int year, String carId, String color, String description, int days, int minOffer) throws IOException, CustomException {
-        factorySales.createSale(abstractBuilderSale, saleModel, modelUser, brand, model, year, carId, color, description, days, minOffer);
+        saleModel = factorySales.createSale(abstractBuilderSale, saleModel, modelUser, brand, model, year, carId, color, description, days, minOffer);
         boolean resultCreateModel = saleModel.createModel();
         if (resultCreateModel) {
+            System.out.println("controlador server create Sale" + saleModel.getCarId());
             saleModel.save();
         }
         return resultCreateModel;
+    }
+
+    public List<SaleModel> showWaitingListSale() {
+        List<SaleModel> newList = SaleModel.getSaleListManager().getWaitingApproveSalesList();
+        return newList;
     }
 }

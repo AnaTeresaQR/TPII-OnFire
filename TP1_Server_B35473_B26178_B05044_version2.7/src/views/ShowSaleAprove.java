@@ -1,5 +1,6 @@
-package observerApproveSale;
+package views;
 
+import controllers.PrincipalControllerServer;
 import models.SaleModel;
 
 /**
@@ -8,11 +9,11 @@ import models.SaleModel;
  */
 public class ShowSaleAprove extends javax.swing.JFrame {
 
-    private SaleModel sale;
+    private PrincipalControllerServer controller;
 
-    public ShowSaleAprove(SaleModel sale) {
+    public ShowSaleAprove(PrincipalControllerServer controller) {
         initComponents();
-        this.sale = sale;
+        this.controller = controller;
         initShowSaleInformation();
         //ThreadApproveSale threadApproveSale = new ThreadApproveSale();
         //threadApproveSale.start();
@@ -20,7 +21,7 @@ public class ShowSaleAprove extends javax.swing.JFrame {
 
     private void initShowSaleInformation() {
         ta_saleInformation.setEditable(false);
-        ta_saleInformation.setText(sale.toString());
+        //ta_saleInformation.setText(sale.toString());
     }
 
     /**
