@@ -9,6 +9,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Calendar;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Client {
 
@@ -142,6 +144,14 @@ public class Client {
 
     public static void main(String[] args) {
         new Client().runClient();
+    }
+
+    public void sendEmail(String email) throws IOException {
+        output.writeUTF(email);
+    }
+
+    public Map<String, String> getOwnSalesTreeProcess() throws IOException, ClassNotFoundException {
+        return (TreeMap<String, String>) inputObj.readObject();
     }
 
 }

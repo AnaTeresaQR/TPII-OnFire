@@ -5,6 +5,8 @@ import factorySale.FactorySaleInterface;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import javax.swing.JFrame;
 import managementAdministrator.ManagementAdministrator;
 import models.SaleModel;
@@ -36,6 +38,8 @@ public class PrincipalControllerServer {
     private WelcomeServerView principalServer;
     private AdministratorMenuView menuServer;
     private ShowSaleApproveList showApproveList;
+    
+    private Map<String, String> treemap;
 
     public PrincipalControllerServer(Server server) {
         this.server = server;
@@ -46,6 +50,7 @@ public class PrincipalControllerServer {
         loadFileSale();
 //        System.out.println("tamaño lista: " + SaleModel.getSaleListManager().getWaitingApproveSalesList().size());
         factorySales = new ConcreteFactorySale();
+        treemap = new TreeMap<>();
     }
 
     public void NoConnection(PrincipalControllerServer controller) {
@@ -138,5 +143,9 @@ public class PrincipalControllerServer {
             menuServer = new AdministratorMenuView(controller);
         }
         menuServer.setVisible(true);
+    }
+    
+    public Map<String, String> getSales(String schedule){
+        return saleModel.getSales(schedule);
     }
 }

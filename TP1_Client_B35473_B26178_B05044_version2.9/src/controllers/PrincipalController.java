@@ -3,6 +3,7 @@ package controllers;
 import socketClient.Client;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Map;
 import javax.swing.JFrame;
 import views.LoginUserView;
 import views.PrincipalView;
@@ -28,6 +29,10 @@ public class PrincipalController {
     private RegisterSaleView registerSale;
 
     private ManageSalesController manageSalesController;
+    
+    private String emailSession;
+    
+    private Map<String, String> ownSalesList;
 
     public PrincipalController(Client client, ManageSalesController manageSalesController) {
         this.client = client;
@@ -127,6 +132,22 @@ public class PrincipalController {
 
     public void exitOnClose() {
         client.closeConnection();
+    }
+
+    public Map<String, String> getOwnSalesTree() {
+        return this.ownSalesList;
+    }
+    
+    public void sendEmail() throws IOException{
+        client.sendEmail(emailSession);
+    }
+    
+    public void setEmailSession(String emailSession){
+        this.emailSession = emailSession;
+    }
+    
+    public void getLoadedMap() throws IOException, ClassNotFoundException{
+        this.ownSalesList = client.getOwnSalesTreeProcess();
     }
 
 }

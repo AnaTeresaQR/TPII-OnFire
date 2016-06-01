@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Calendar;
+import java.util.Map;
 import models.UserModel;
 import salesBuilder.AbstractBuilderCreateSale;
 import salesBuilder.ConceteBuilderCloseSale;
@@ -109,6 +110,12 @@ public class AcceptClient extends Thread {
         int selection = input.readInt();
         switch (selection) {
             case 6:
+                // Get email
+                String email = input.readUTF();
+                // We have here the sales
+                Map<String, String> map = controller.getSales(email);
+                // We are going to send the list
+                outputObj.writeObject(map);
                 processManageSales();
                 break;
             default:

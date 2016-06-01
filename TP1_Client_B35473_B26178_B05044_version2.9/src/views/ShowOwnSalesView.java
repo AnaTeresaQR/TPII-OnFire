@@ -4,6 +4,10 @@ import controllers.ManageSalesController;
 import controllers.PrincipalController;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -24,6 +28,7 @@ public class ShowOwnSalesView extends javax.swing.JFrame {
         this.manageSalesController = manageSalesController;
         // initSaleApproveList(sales);
         this.setLocationRelativeTo(null);
+        initOwnSalesList();
     }
 
     /**
@@ -160,6 +165,25 @@ public class ShowOwnSalesView extends javax.swing.JFrame {
             model.addElement(registeredSales.get(i));
 
         }
+        SaleApproveList.setModel(model);
+    }
+    
+    private void initOwnSalesList(){
+        DefaultListModel model = new DefaultListModel();
+        Map<String, String> sale = controller.getOwnSalesTree();
+        
+        Iterator<String> iteratorList;
+        
+        List list = new ArrayList(sale.values());
+        iteratorList = list.iterator();
+        
+        
+        while (iteratorList.hasNext()) {
+            model.addElement("INFO: " +iteratorList.next());
+            
+            System.out.println("initSaleWaitingList -> Agrego elementos");
+        }
+        
         SaleApproveList.setModel(model);
     }
 

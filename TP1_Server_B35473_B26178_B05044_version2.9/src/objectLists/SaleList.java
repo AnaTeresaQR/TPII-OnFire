@@ -5,6 +5,8 @@ import enums.EnumFiles;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import managerList.ListLoader;
 import managerList.ListSaver;
 import models.SaleModel;
@@ -273,6 +275,21 @@ public class SaleList implements Serializable {
         }
 
         return size;
+    }
+    
+    public Map<String, String> getSales(String email){
+        Map<String, String> map = new TreeMap<>();
+        for(List<SaleModel> temp: saleList){
+            for(SaleModel model: temp){
+                
+                if (model.getUser().getEmail().equals(email)) {
+                    map.put(model.getCarId(), model.toString());
+                    
+                }
+            }
+        }
+        
+        return map;
     }
 
 }
