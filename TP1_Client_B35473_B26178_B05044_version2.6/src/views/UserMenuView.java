@@ -1,5 +1,6 @@
 package views;
 
+import controllers.ManageSalesController;
 import controllers.PrincipalController;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -11,7 +12,7 @@ import javax.swing.JOptionPane;
  * @author rosan
  */
 public class UserMenuView extends javax.swing.JFrame {
-    
+
     private PrincipalController controller;
     private int selection;
 
@@ -184,14 +185,15 @@ public class UserMenuView extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jb_manageOwnSalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_manageOwnSalesActionPerformed
-        this.selection = 6;
-        try {
-            controller.selectAction(selection);
-            controller.showManageSale(controller);
-        } catch (IOException ex) {
-            Logger.getLogger(UserMenuView.class.getName()).log(Level.SEVERE, null, ex);
-        }
         
+        try {
+            this.selection = 6;
+            controller.selectAction(selection);
+            controller.showManageSale(controller, this);
+        } catch (IOException ex) {
+             JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+
 
     }//GEN-LAST:event_jb_manageOwnSalesActionPerformed
 

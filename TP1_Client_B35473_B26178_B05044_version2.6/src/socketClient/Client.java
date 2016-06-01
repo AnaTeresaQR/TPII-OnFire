@@ -26,6 +26,8 @@ public class Client {
     private ManageSalesController controllerSales;
 
     public Client() {
+        controllerSales = new ManageSalesController(this);
+        controller = new PrincipalController(this, controllerSales);
 
     }
 
@@ -33,10 +35,8 @@ public class Client {
         try {
 
             connectToServer();
-            controller = new PrincipalController(this);
             getStreams();
             controller.processConnection();
-
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -84,7 +84,7 @@ public class Client {
     public boolean processRegisterUser(String id, String name, String email, String password, Calendar birthdate, String phoneNumber) {
         boolean status = false;
         try {
-            
+
             output.writeUTF(id);
             output.writeUTF(name);
             output.writeUTF(email);
@@ -120,8 +120,8 @@ public class Client {
         return -1;
     }
 
-    public String processRegisterSale(String brand, String model, int year, String carId, String color, String description, int days, int minOffer, int typeSale) {
-        String messageConfirmation = "";
+    public boolean processRegisterSale(String brand, String model, int year, String carId, String color, String description, int days, int minOffer, int typeSale) {
+        boolean status = false;
         try {
             output.writeUTF(brand);
             output.writeUTF(model);
@@ -132,11 +132,12 @@ public class Client {
             output.writeInt(days);
             output.writeInt(minOffer);
             output.writeInt(typeSale);
-            messageConfirmation = input.readUTF();
+            status = input.readBoolean();
+            return status;
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return messageConfirmation;
+        return status;
     }
 
     public static void main(String[] args) {

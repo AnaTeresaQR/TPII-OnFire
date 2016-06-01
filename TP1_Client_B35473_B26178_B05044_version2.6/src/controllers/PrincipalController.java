@@ -27,8 +27,11 @@ public class PrincipalController {
     private ShowOwnSalesView manageUserSales;
     private RegisterSaleView registerSale;
 
-    public PrincipalController(Client client) {
+    private ManageSalesController manageSalesController;
+
+    public PrincipalController(Client client, ManageSalesController manageSalesController) {
         this.client = client;
+        this.manageSalesController = manageSalesController;
     }
 
     public void selectAction(int num) throws IOException {
@@ -83,16 +86,18 @@ public class PrincipalController {
         registerUser.setVisible(true);
     }
 
-    public void showManageSale(PrincipalController controller) {
+    public void showManageSale(PrincipalController controller, JFrame parent) {
+        parent.dispose();
         if (manageUserSales == null) {
-            manageUserSales = new ShowOwnSalesView(controller, client);
+            manageUserSales = new ShowOwnSalesView(controller, manageSalesController);
         }
         manageUserSales.setVisible(true);
     }
 
-    public void showAddSale(ManageSalesController manageSaleController) {
+    public void showAddSale(ManageSalesController manageSaleController, JFrame child) {
+        child.dispose();
         if (registerSale == null) {
-            registerSale = new RegisterSaleView(manageSaleController);
+            registerSale = new RegisterSaleView(this, manageSaleController);
         }
         registerSale.setVisible(true);
     }
