@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>SaleList.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;TP1__B35473_B26178_B05044&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">objectLists</a> &gt; <span class="el_source">SaleList.java</span></div><h1>SaleList.java</h1><pre class="source lang-java linenums">package objectLists;
+
+import enums.EnumFiles;
+import java.util.ArrayList;
+import java.util.List;
+import managerList.ListLoader;
+import managerList.ListSaver;
+import salesBuilder.Sale;
+
+/**
+ * Class that is responsible for handling the sale list. Only this class can
+ * create an instance of itself. Singleton pattern
+ *
+ * @author Robert Sánchez, Edgardo Quirós, Ana Teresa Quesada.
+ */
+public class SaleList {
+
+    private List&lt;Sale&gt; saleList;
+    private static SaleList uniqueInstance;
+
+<span class="nc" id="L21">    private SaleList() {</span>
+<span class="nc" id="L22">        saleList = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L23">        listLoader();</span>
+<span class="nc" id="L24">    }</span>
+
+    /**
+     * Method that creates a single instance of class
+     *
+     * @return the unique instance of this class
+     */
+    public static SaleList getUniqueInstance() {
+<span class="nc bnc" id="L32" title="All 2 branches missed.">        if (uniqueInstance == null) {</span>
+<span class="nc" id="L33">            uniqueInstance = new SaleList();</span>
+        }
+<span class="nc" id="L35">        return uniqueInstance;</span>
+    }
+
+    /**
+     * Adds a sale into the list, returns true if can addList, or false if
+     * failing to addList
+     *
+     * @param sale, receives the sale to addList
+     * @return true, if a sale could addList, false if a sale failed to addList
+     */
+    public boolean addList(Sale sale) {
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        if (!exist(sale)) {</span>
+<span class="nc" id="L47">            return saleList.add(sale);</span>
+        }
+<span class="nc" id="L49">        return false;</span>
+    }
+
+    /**
+     * Returns a sale in the list with the index in this list
+     *
+     * @param i ,the index for search in the list
+     * @return the sale that matches the list
+     */
+    public Sale getIndex(int i) {
+<span class="nc" id="L59">        return saleList.get(i);</span>
+    }
+
+    /**
+     * Contains the size of the list
+     *
+     * @return the size of the list
+     */
+    public int size() {
+<span class="nc" id="L68">        return saleList.size();</span>
+    }
+
+    /**
+     * Refreshes the list if new sales are added
+     */
+    public void refresh() {
+<span class="nc" id="L75">        saleList.clear();</span>
+<span class="nc" id="L76">        listLoader();</span>
+<span class="nc" id="L77">    }</span>
+
+    /**
+     * Load the list with file elements
+     */
+    private void listLoader() {
+<span class="nc" id="L83">        ListLoader&lt;Sale&gt; loader = new ListLoader&lt;&gt;(EnumFiles.SALE_FILE_NAME.getValue());</span>
+<span class="nc" id="L84">        this.saleList = loader.loadList();</span>
+<span class="nc" id="L85">    }</span>
+
+    /**
+     * Save the list in the binary file
+     */
+    public void save() {
+<span class="nc" id="L91">        ListSaver&lt;Sale&gt; save = new ListSaver&lt;&gt;(EnumFiles.SALE_FILE_NAME.getValue());</span>
+<span class="nc" id="L92">        save.saveList(this.saleList);</span>
+<span class="nc" id="L93">    }</span>
+
+    /**
+     * Check if a sale already exist in the list with te same car id
+     *
+     * @param sale, receives the sale to compare with the elements of the list
+     * @return, true if have the same attributes with another object in the
+     * list, false if does not existe the local object
+     */
+    public boolean exist(Sale sale) {
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        for (Sale s : saleList) {</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">            if (s.getCarId().equals(sale.getCarId())) {</span>
+<span class="nc" id="L105">                return true;</span>
+            }
+<span class="nc" id="L107">        }</span>
+<span class="nc" id="L108">        return false;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

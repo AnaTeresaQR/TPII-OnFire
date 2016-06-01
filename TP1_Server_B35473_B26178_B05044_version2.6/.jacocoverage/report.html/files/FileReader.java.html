@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>FileReader.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;TP1__B35473_B26178_B05044&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">files</a> &gt; <span class="el_source">FileReader.java</span></div><h1>FileReader.java</h1><pre class="source lang-java linenums">package files;
+
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+
+/**
+ * Class is responsible for write in the file. receives in the constructor the
+ * name of the file to write in it
+ *
+ * @author Robert Sánchez, Edgardo Quirós, Ana Teresa Quesada.
+ * @param &lt;T&gt;
+ */
+public class FileReader&lt;T&gt; {
+
+    private ObjectInputStream reader;
+    private final FileLoader loader;
+
+<span class="fc" id="L20">    public FileReader(String fileName) {</span>
+<span class="fc" id="L21">        loader = new FileLoader(fileName);</span>
+<span class="fc" id="L22">    }</span>
+
+    /**
+     * Open to read the file
+     *
+     * @throws java.io.IOException if it does not open properly
+     */
+    public void open() throws IOException {
+        try {
+<span class="fc" id="L31">            FileInputStream fileInputStream = new FileInputStream(loader.getFile());</span>
+<span class="fc" id="L32">            reader = new ObjectInputStream(fileInputStream);</span>
+
+<span class="fc" id="L34">        } catch (EOFException e) {</span>
+<span class="fc" id="L35">            System.out.println(e.getMessage());</span>
+<span class="fc" id="L36">        }</span>
+<span class="fc" id="L37">    }</span>
+
+    /**
+     * Method is responsible for reading the file
+     *
+     * @return a read user
+     * @throws java.io.IOException file error
+     * @throws java.lang.ClassNotFoundException if the class is not looking
+     * @throws java.io.EOFException if it is the end of file
+     */
+    public T read() throws IOException, EOFException, ClassNotFoundException {
+<span class="fc" id="L48">        return (T) reader.readObject();</span>
+    }
+
+    /**
+     * Close the file after reading
+     *
+     * @throws java.io.IOException if there are problems when close the file
+     */
+    public void close() throws IOException {
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if (reader != null) {</span>
+<span class="fc" id="L58">            reader.close();</span>
+        }
+<span class="fc" id="L60">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
