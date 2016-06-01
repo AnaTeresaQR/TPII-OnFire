@@ -36,7 +36,6 @@ public class DirectorSales {
         if (builder == null) {
             throw new CustomException("No es posible crear  la subasta");
         }
-
         builder.buildSale(saleModel);
         builder.createSpecificSale();
         builder.buildUser(user);

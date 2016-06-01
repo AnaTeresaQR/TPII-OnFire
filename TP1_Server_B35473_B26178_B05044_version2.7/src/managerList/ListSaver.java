@@ -33,7 +33,7 @@ public class ListSaver<T> {
 
             fileWriter.close();
         } catch (IOException e) {
-            System.out.println("No se puede guardar la lista\n" + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

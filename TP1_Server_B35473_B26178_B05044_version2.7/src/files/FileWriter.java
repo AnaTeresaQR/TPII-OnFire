@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import static java.util.Collections.list;
 import java.util.List;
+import models.SaleModel;
 import objectLists.SaleList;
 
 /**

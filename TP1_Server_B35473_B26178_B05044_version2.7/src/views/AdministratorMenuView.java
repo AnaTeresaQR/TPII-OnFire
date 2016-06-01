@@ -7,7 +7,7 @@ import controllers.PrincipalControllerServer;
  * @author Edgardo Quirós
  */
 public class AdministratorMenuView extends javax.swing.JFrame {
-
+    
     private PrincipalControllerServer controller;
     private int selection;
 
@@ -142,7 +142,9 @@ public class AdministratorMenuView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jb_ApproveSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_ApproveSaleActionPerformed
-        this.selection = 1;
+        
+        ShowSaleApproveList show = new ShowSaleApproveList(controller, this, true);
+        show.setVisible(true);
     }//GEN-LAST:event_jb_ApproveSaleActionPerformed
 
     private void jB_returnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_returnViewActionPerformed
@@ -151,19 +153,19 @@ public class AdministratorMenuView extends javax.swing.JFrame {
     }//GEN-LAST:event_jB_returnViewActionPerformed
 
     private void jbNextSalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNextSalesActionPerformed
-        this.selection = 2;
+        
     }//GEN-LAST:event_jbNextSalesActionPerformed
 
     private void jbActiveSalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbActiveSalesActionPerformed
-        this.selection = 3;
+        
     }//GEN-LAST:event_jbActiveSalesActionPerformed
 
     private void jbEndedSalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEndedSalesActionPerformed
-        this.selection = 4;
+        
     }//GEN-LAST:event_jbEndedSalesActionPerformed
 
     private void jbUserListsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUserListsActionPerformed
-        this.selection = 5;
+        
     }//GEN-LAST:event_jbUserListsActionPerformed
 
     /**

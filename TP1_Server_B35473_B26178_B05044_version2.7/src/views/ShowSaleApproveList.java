@@ -1,7 +1,10 @@
-package observerApproveSale;
+package views;
 
+import controllers.PrincipalControllerServer;
+import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
+import models.SaleModel;
 import objectLists.SaleList;
 
 /**
@@ -10,15 +13,14 @@ import objectLists.SaleList;
  */
 public class ShowSaleApproveList extends javax.swing.JDialog {
 
-    SaleList manager = new SaleList();
+    private PrincipalControllerServer controller;
 
-    public ShowSaleApproveList(JFrame parent, boolean modal, String sales) {
+    public ShowSaleApproveList(PrincipalControllerServer controller, JFrame parent, boolean modal) {
         super(parent, modal);
-
+        this.controller = controller;
         initComponents();
-        initSaleApproveList(sales);
+        initSaleWaitingList();
         this.setLocationRelativeTo(null);
-        //  this.client = client;
     }
 
     /**
@@ -31,17 +33,17 @@ public class ShowSaleApproveList extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        SaleApproveList = new javax.swing.JList<>();
+        SaleApproveList = new javax.swing.JList<String>();
         lbContactLisr = new javax.swing.JLabel();
         bt_back = new javax.swing.JButton();
         bt_approve = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        SaleApproveList.setModel(new javax.swing.AbstractListModel<String>() {
+        SaleApproveList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+            public Object getElementAt(int i) { return strings[i]; }
         });
         jScrollPane1.setViewportView(SaleApproveList);
 
@@ -54,7 +56,7 @@ public class ShowSaleApproveList extends javax.swing.JDialog {
             }
         });
 
-        bt_approve.setText("Aprovar");
+        bt_approve.setText("Aprobar");
         bt_approve.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_approveActionPerformed(evt);
@@ -111,12 +113,13 @@ public class ShowSaleApproveList extends javax.swing.JDialog {
 //    public int movieSelected() {
 //        return listMovies.getSelectedIndex();
 //    }
-    private void initSaleApproveList(String sales) {
-        String[] salesApprove = sales.split(",");
-        DefaultListModel model = new DefaultListModel();
-        for (int i = 0; i < salesApprove.length; i++) {
-            model.addElement(salesApprove[i]);
+    private void initSaleWaitingList() {
 
+        DefaultListModel model = new DefaultListModel();
+        List<SaleModel> sale = controller.showWaitingListSale();
+        for (int i = 0; i < sale.size(); i++) {
+            model.addElement(sale.get(i));
+            System.out.println("" + sale.get(i).toString());
         }
         SaleApproveList.setModel(model);
     }

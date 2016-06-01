@@ -18,7 +18,7 @@ import usersBuilder.CustomException;
  */
 public class SaleList implements Serializable {
 
-    private List<SaleList> saleList;
+    private List<List> saleList;
     private Strategy strategy;
 
     private List<SaleModel> approveSalesList;
@@ -37,7 +37,7 @@ public class SaleList implements Serializable {
         waitingApproveSalesList = new ArrayList<>();
         nextSalesList = new ArrayList<>();
         activeList = new ArrayList<>();
-        listLoader();
+
     }
 
     public boolean addSale(SaleModel sale) throws CustomException {
@@ -192,16 +192,54 @@ public class SaleList implements Serializable {
      * Load the list with file elements
      */
     public void listLoader() {
-        ListLoader<SaleList> loader = new ListLoader<>(EnumFiles.SALE_FILE_NAME.getValue());
-        this.saleList = loader.loadList();
+        ListLoader<List> loader = new ListLoader<>(EnumFiles.SALE_FILE_NAME.getValue());
+
+        saleList = (List<List>) loader.loadList();
+
+        if (!saleList.isEmpty() && saleList.size() == 4) {
+            this.approveSalesList = (List<SaleModel>)saleList.get(0);
+            this.waitingApproveSalesList = (List<SaleModel>)saleList.get(1);
+            this.activeList = (List<SaleModel>)saleList.get(2);
+            this.nextSalesList = (List<SaleModel>)saleList.get(3);
+        }
     }
 
     /**
      * Save the list in the binary file
      */
     public void save() {
-        ListSaver<SaleList> save = new ListSaver<>(EnumFiles.SALE_FILE_NAME.getValue());
-        save.saveList(this.saleList);
+        ListSaver<List> save = new ListSaver<>(EnumFiles.SALE_FILE_NAME.getValue());
+        reLoad();
+        
+        System.out.println(print());
+        
+        save.saveList(saleList);
+    }
+
+    private void reLoad() {
+
+        saleList = new ArrayList<>();
+        
+        saleList.add(approveSalesList);
+        saleList.add(waitingApproveSalesList);
+        saleList.add(activeList);
+        saleList.add(nextSalesList);
+
+    }
+    
+    public  String print(){
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < saleList.size(); i++) {
+            List<SaleModel> x = saleList.get(i);
+            sb.append("Inicio Lista: " + i + "\n");
+            for (int j = 0; j < x.size(); j++) {
+                sb.append(x.get(j).getCarId());
+                sb.append("\n");
+            }
+            sb.append("Fin Lista: " + i + "\n");
+        }
+        
+        return sb.toString();
     }
 
     public void setStrategy(Strategy strategy) {
@@ -226,6 +264,15 @@ public class SaleList implements Serializable {
 
     public void setWaitingApproveSalesList(List<SaleModel> waitingApproveSalesList) {
         this.waitingApproveSalesList = waitingApproveSalesList;
+    }
+
+    public int totalSize() {
+        int size = 0;
+        for (List t : saleList) {
+            size += t.size();
+        }
+
+        return size;
     }
 
 }

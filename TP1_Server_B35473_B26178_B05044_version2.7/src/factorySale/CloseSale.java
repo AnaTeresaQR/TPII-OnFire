@@ -1,5 +1,6 @@
 package factorySale;
 
+import java.io.Serializable;
 import models.SaleModel;
 
 /**
@@ -7,7 +8,7 @@ import models.SaleModel;
  *
  * @author Robert Sánchez, Edgardo Quirós, Ana Teresa Quesada
  */
-public class CloseSale extends SaleModel {
+public class CloseSale extends SaleModel implements Serializable {
 
     public CloseSale() {
     }
