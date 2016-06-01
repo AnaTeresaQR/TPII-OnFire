@@ -103,16 +103,12 @@ public class ShowSaleApproveList extends javax.swing.JFrame {
 
     }//GEN-LAST:event_bt_approveActionPerformed
 
-//    public int movieSelected() {
-//        return listMovies.getSelectedIndex();
-//    }
     private void initSaleWaitingList() {
 
         DefaultListModel model = new DefaultListModel();
         List<SaleModel> sale = controller.showWaitingListSale();
         for (int i = 0; i < sale.size(); i++) {
             model.addElement(sale.get(i));
-            System.out.println("" + sale.get(i).toString());
         }
         SaleApproveList.setModel(model);
     }

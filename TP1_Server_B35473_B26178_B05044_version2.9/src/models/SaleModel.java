@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Map;
 import objectLists.SaleList;
 import usersBuilder.CustomException;
 
@@ -234,10 +235,14 @@ public class SaleModel extends DateFormatString implements Serializable {
     public int totalSize() {
         return saleListManager.totalSize();
     }
+    
+    public Map<String, String> getSales(String schedule){
+        return saleListManager.getSales(schedule);
+    }
 
     @Override
     public String toString() {
-        System.out.println("" + "Marca: " + brand + "\nModelo: " + model + "\nAño: " + year + "\nNúmero de placa: " + carId + "\nColor: " + color + "\nDescripción: " + description + "\nDuración de la subasta: " + days + " días" + "\nOferta mínima: " + minOffer + " colones");
+        
         return "Marca: " + brand + "\nModelo: " + model + "\nAño: " + year + "\nNúmero de placa: " + carId + "\nColor: " + color + "\nDescripción: " + description + "\nDuración de la subasta: " + days + " días" + "\nOferta mínima: " + minOffer + " colones";
     }
 

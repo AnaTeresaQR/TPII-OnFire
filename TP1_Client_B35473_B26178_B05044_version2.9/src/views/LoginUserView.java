@@ -141,6 +141,7 @@ public class LoginUserView extends javax.swing.JFrame {
             int resultLogin = controller.loginUser(email, password);
             if (resultLogin == 1) {
                 JOptionPane.showMessageDialog(null, "Resultado de Registrar\n" + "Bienvenido al programa");
+                controller.setEmailSession(email);
                 controller.showMenu(controller);
                 this.dispose();
             } else {

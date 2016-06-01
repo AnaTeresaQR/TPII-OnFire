@@ -189,9 +189,13 @@ public class UserMenuView extends javax.swing.JFrame {
         try {
             this.selection = 6;
             controller.selectAction(selection);
+            controller.sendEmail();
+            controller.getLoadedMap();
             controller.showManageSale(controller, this);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UserMenuView.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 
